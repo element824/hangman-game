@@ -2,72 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Gosford Sheela - Word Guess Game</title>
+    <meta name="description" content="Gosford Sheela — a spooky hangman word guess game. Save the stickman from the monster!">
+    <meta name="theme-color" content="#1a1a2e">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Patrick+Hand&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Confetti canvas -->
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
     <!-- Home / Menu Screen -->
-    <div id="menu-screen" class="screen active">
+    <div id="menu-screen" class="screen active" role="main">
         <div class="menu-forest-bg"></div>
         <div class="menu-content">
             <h1 class="game-title">GOSFORD SHEELA</h1>
-            <p class="game-subtitle">Save the stickman!</p>
-            <div class="menu-stats">
-                <span class="stat">❤️ SAVED: <strong id="menu-saved">0</strong></span>
-                <span class="stat">⭐ BEST: <strong id="menu-best">0</strong></span>
+            <p class="game-subtitle">Save the stickman from the monster!</p>
+
+            <!-- Streak + Stats Bar -->
+            <div class="menu-stats-bar">
+                <div class="stat-card">
+                    <span class="stat-icon">❤️</span>
+                    <div class="stat-info">
+                        <span class="stat-label">Saved</span>
+                        <strong id="menu-saved" class="stat-value">0</strong>
+                    </div>
+                </div>
+                <div class="stat-card streak-card" id="menu-streak-card">
+                    <span class="stat-icon" id="menu-streak-icon">🔥</span>
+                    <div class="stat-info">
+                        <span class="stat-label">Streak</span>
+                        <strong id="menu-streak" class="stat-value">0</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">⭐</span>
+                    <div class="stat-info">
+                        <span class="stat-label">Best</span>
+                        <strong id="menu-best" class="stat-value">0</strong>
+                    </div>
+                </div>
             </div>
+
+            <!-- Daily Challenge -->
+            <button id="daily-btn" class="btn btn-daily" aria-label="Play the daily challenge word">
+                <span class="daily-icon">📅</span>
+                <span class="daily-text">
+                    <strong>Daily Challenge</strong>
+                    <small id="daily-status">New word every day!</small>
+                </span>
+            </button>
+
+            <!-- Category Select -->
             <div class="category-select">
                 <h2>Choose a Category</h2>
-                <div id="category-buttons" class="category-grid"></div>
+                <div id="category-buttons" class="category-grid" role="list"></div>
             </div>
-            <button id="random-btn" class="btn btn-play">🎲 Random Category</button>
+
+            <button id="random-btn" class="btn btn-play" aria-label="Start game with a random category">
+                🎲 Random Category
+            </button>
+
+            <!-- Achievements Quick View -->
+            <button id="achievements-btn" class="btn btn-ghost" aria-label="View achievements">
+                🏆 Achievements <span id="achievement-count" class="badge">0</span>
+            </button>
         </div>
     </div>
 
     <!-- Game Screen -->
-    <div id="game-screen" class="screen">
+    <div id="game-screen" class="screen" role="main" aria-label="Game screen">
         <header class="game-header">
-            <button id="home-btn" class="icon-btn" title="Home">🏠</button>
-            <span id="category-label" class="category-name">Outer Space</span>
+            <button id="home-btn" class="icon-btn" title="Home" aria-label="Go to home menu">🏠</button>
+            <div class="header-center">
+                <span id="category-label" class="category-name">Outer Space</span>
+                <div class="difficulty-dots" id="difficulty-dots" aria-label="Word difficulty"></div>
+            </div>
             <div class="header-stats">
-                <span class="stat">❤️ SAVED: <strong id="game-saved">0</strong></span>
-                <span class="stat">⭐ BEST: <strong id="game-best">0</strong></span>
+                <div class="streak-indicator" id="game-streak-indicator">
+                    <span class="streak-fire" id="game-streak-fire">🔥</span>
+                    <strong id="game-streak">0</strong>
+                </div>
+                <span class="stat-mini">❤️ <strong id="game-saved">0</strong></span>
+                <span class="stat-mini">⭐ <strong id="game-best">0</strong></span>
             </div>
         </header>
 
         <div class="game-area">
             <div class="game-left">
                 <!-- Word Display -->
-                <div id="word-display" class="word-display"></div>
+                <div id="word-display" class="word-display" aria-label="Word to guess"></div>
 
                 <!-- Hint -->
-                <div id="hint-area" class="hint-area"></div>
+                <div id="hint-area" class="hint-area" aria-live="polite"></div>
 
                 <!-- Alphabet Grid -->
-                <div id="alphabet-grid" class="alphabet-grid"></div>
+                <div id="alphabet-grid" class="alphabet-grid" role="group" aria-label="Letter buttons"></div>
             </div>
 
             <div class="game-right">
-                <!-- Scene: Forest + Characters -->
-                <div class="scene">
+                <!-- Scene -->
+                <div class="scene" id="game-scene">
                     <div class="forest-bg">
                         <div class="tree tree-1"></div>
                         <div class="tree tree-2"></div>
                         <div class="tree tree-3"></div>
                         <div class="tree tree-4"></div>
+                        <div class="tree tree-5"></div>
                     </div>
 
-                    <!-- Balloon String + Character -->
-                    <div id="character-group" class="character-group">
+                    <!-- Fog layers for depth -->
+                    <div class="fog fog-1"></div>
+                    <div class="fog fog-2"></div>
+
+                    <!-- Character Group -->
+                    <div id="character-group" class="character-group idle">
                         <div class="balloon" id="balloon">
-                            <div class="balloon-body"></div>
+                            <div class="balloon-body">
+                                <div class="balloon-shine"></div>
+                            </div>
+                            <div class="balloon-knot"></div>
                             <div class="balloon-string"></div>
                         </div>
                         <div class="stickman" id="stickman">
-                            <div class="stickman-head"></div>
+                            <div class="stickman-head">
+                                <div class="stickman-eye left"></div>
+                                <div class="stickman-eye right"></div>
+                            </div>
                             <div class="stickman-body"></div>
                             <div class="stickman-arm-left"></div>
                             <div class="stickman-arm-right"></div>
@@ -79,34 +146,78 @@
                     <!-- Monster -->
                     <div class="monster" id="monster">
                         <div class="monster-body">
-                            <div class="monster-eye left"></div>
-                            <div class="monster-eye right"></div>
+                            <div class="monster-eye left">
+                                <div class="monster-pupil"></div>
+                            </div>
+                            <div class="monster-eye right">
+                                <div class="monster-pupil"></div>
+                            </div>
                             <div class="monster-mouth"></div>
                         </div>
                         <div class="monster-fur"></div>
                     </div>
 
-                    <!-- Wrong guess counter -->
-                    <div id="wrong-count" class="wrong-count"></div>
+                    <!-- Wrong guess pips -->
+                    <div id="wrong-count" class="wrong-count" aria-label="Wrong guesses"></div>
                 </div>
             </div>
         </div>
 
         <footer class="game-footer">
-            <button id="hint-btn" class="icon-btn" title="Hint">❓</button>
-            <button id="sound-btn" class="icon-btn" title="Toggle Sound">🔊</button>
+            <button id="hint-btn" class="icon-btn footer-btn" title="Show hint" aria-label="Show hint">
+                <span>❓</span>
+                <small>Hint</small>
+            </button>
+            <button id="sound-btn" class="icon-btn footer-btn" title="Toggle Sound" aria-label="Toggle sound">
+                <span id="sound-icon">🔊</span>
+                <small>Sound</small>
+            </button>
         </footer>
     </div>
 
     <!-- Result Modal -->
-    <div id="result-modal" class="modal hidden">
+    <div id="result-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
         <div class="modal-content">
+            <div id="result-emoji" class="result-emoji"></div>
             <h2 id="result-title"></h2>
-            <p id="result-word"></p>
-            <p id="result-message"></p>
+            <p id="result-word" class="result-word"></p>
+            <p id="result-message" class="result-message"></p>
+
+            <!-- Stats breakdown -->
+            <div class="result-stats" id="result-stats">
+                <div class="result-stat-item">
+                    <span class="rs-label">Wrong guesses</span>
+                    <strong id="rs-wrong">0</strong>
+                </div>
+                <div class="result-stat-item">
+                    <span class="rs-label">Hint used</span>
+                    <strong id="rs-hint">No</strong>
+                </div>
+                <div class="result-stat-item">
+                    <span class="rs-label">Time</span>
+                    <strong id="rs-time">0s</strong>
+                </div>
+                <div class="result-stat-item">
+                    <span class="rs-label">Streak</span>
+                    <strong id="rs-streak">0</strong>
+                </div>
+            </div>
+
             <div class="modal-buttons">
-                <button id="play-again-btn" class="btn btn-play">Play Again</button>
+                <button id="play-again-btn" class="btn btn-play">▶ Play Again</button>
+                <button id="share-btn" class="btn btn-share">📤 Share</button>
                 <button id="menu-btn" class="btn btn-secondary">Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div id="achievements-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="ach-title">
+        <div class="modal-content modal-achievements">
+            <h2 id="ach-title">🏆 Achievements</h2>
+            <div id="achievements-list" class="achievements-list"></div>
+            <div class="modal-buttons">
+                <button id="ach-close-btn" class="btn btn-secondary">Close</button>
             </div>
         </div>
     </div>

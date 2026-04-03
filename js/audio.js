@@ -26,6 +26,7 @@ class AudioManager {
             case 'lose': this._playLose(); break;
             case 'click': this._playClick(); break;
             case 'reveal': this._playReveal(); break;
+            case 'achievement': this._playAchievement(); break;
         }
     }
 
@@ -71,6 +72,12 @@ class AudioManager {
         this._playTone(440, 0.1, 'sine', 0.15);
         setTimeout(() => this._playTone(550, 0.1, 'sine', 0.15), 80);
         setTimeout(() => this._playTone(660, 0.15, 'sine', 0.15), 160);
+    }
+
+    _playAchievement() {
+        [660, 880, 1100, 1320].forEach((freq, i) => {
+            setTimeout(() => this._playTone(freq, 0.15, 'sine', 0.2), i * 100);
+        });
     }
 }
 
