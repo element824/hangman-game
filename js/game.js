@@ -601,7 +601,7 @@ class HangmanGame {
         const pips = Array.from({ length: this.maxWrong }, (_, i) => i < this.wrongCount ? '🟥' : '⬜').join('');
 
         const text = [
-            `🎃 Gosford Sheela${this.isDaily ? ' (Daily)' : ''}`,
+            `🎃 Gosford Gang Hangman${this.isDaily ? ' (Daily)' : ''}`,
             `${won ? '✅' : '❌'} ${this.currentCategory}`,
             pips,
             won ? `🔥 Streak: ${streak}` : 'Better luck next time!',
