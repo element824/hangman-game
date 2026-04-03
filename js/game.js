@@ -650,12 +650,22 @@ class HangmanGame {
 
     // ===== CONFETTI =====
     initConfetti() {
-        this.confettiCanvas.width = window.innerWidth;
-        this.confettiCanvas.height = window.innerHeight;
+        const dpr = window.devicePixelRatio || 1;
+        this.confettiCanvas.width = window.innerWidth * dpr;
+        this.confettiCanvas.height = window.innerHeight * dpr;
+        this.confettiCanvas.style.width = window.innerWidth + 'px';
+        this.confettiCanvas.style.height = window.innerHeight + 'px';
         this.confettiCtx = this.confettiCanvas.getContext('2d');
+        this.confettiCtx.scale(dpr, dpr);
+
         window.addEventListener('resize', () => {
-            this.confettiCanvas.width = window.innerWidth;
-            this.confettiCanvas.height = window.innerHeight;
+            const dpr = window.devicePixelRatio || 1;
+            this.confettiCanvas.width = window.innerWidth * dpr;
+            this.confettiCanvas.height = window.innerHeight * dpr;
+            this.confettiCanvas.style.width = window.innerWidth + 'px';
+            this.confettiCanvas.style.height = window.innerHeight + 'px';
+            this.confettiCtx = this.confettiCanvas.getContext('2d');
+            this.confettiCtx.scale(dpr, dpr);
         });
     }
 

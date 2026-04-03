@@ -27,6 +27,11 @@
     --transition-fast: 0.15s;
     --transition-med: 0.3s;
     --transition-slow: 0.6s;
+    --scale: 1;
+}
+
+html {
+    font-size: calc(16px * var(--scale));
 }
 
 html, body {
@@ -1416,7 +1421,7 @@ button:focus:not(:focus-visible) {
     100% { filter: brightness(1); }
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE — VIEWPORT WIDTH ===== */
 @media (max-width: 768px) {
     .game-area {
         flex-direction: column;
@@ -1484,6 +1489,203 @@ button:focus:not(:focus-visible) {
     .modal-content {
         padding: 24px 18px;
     }
+}
+
+/* ===== RESPONSIVE — VIEWPORT HEIGHT (short screens / landscape) ===== */
+@media (max-height: 600px) {
+    .game-header { padding: 4px 12px; }
+    .game-footer { padding: 4px 16px; }
+
+    .game-area { padding: 4px 12px; gap: 4px; }
+
+    .word-display { padding: 4px; gap: 4px; min-height: 40px; }
+    .letter-slot { width: 24px; height: 32px; font-size: 1.2rem; }
+
+    .alphabet-grid { gap: 3px; }
+    .letter-btn { padding: 4px 0; font-size: 0.9rem; }
+
+    .hint-area { font-size: 0.8rem; min-height: 18px; }
+
+    .game-title { font-size: clamp(1.8rem, 6vw, 3rem); }
+    .game-subtitle { font-size: 0.9rem; margin-bottom: 10px; }
+    .menu-content { padding: 10px; }
+    .category-btn { padding: 8px 6px; font-size: 0.85rem; }
+    .category-btn .emoji { font-size: 1.2rem; }
+    .btn-daily { padding: 10px 14px; }
+    .btn { padding: 8px 20px; font-size: 1rem; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .game-area { flex-direction: row; }
+    .game-left { max-width: 55%; }
+    .game-right { max-height: 100%; min-width: 200px; }
+
+    .alphabet-grid { grid-template-columns: repeat(9, 1fr); gap: 2px; }
+    .letter-btn { padding: 3px 0; font-size: 0.8rem; }
+    .letter-slot { width: 20px; height: 28px; font-size: 1rem; border-bottom-width: 2px; }
+}
+
+/* ===== RESPONSIVE — LARGE SCREENS (desktops, high-res) ===== */
+@media (min-width: 1400px) {
+    .game-left { max-width: 540px; }
+
+    .letter-slot { width: 48px; height: 58px; font-size: 2.2rem; }
+    .word-display { gap: 10px; }
+
+    .alphabet-grid { max-width: 460px; gap: 7px; }
+    .letter-btn { font-size: 1.4rem; padding: 10px 0; }
+
+    .menu-content { max-width: 600px; }
+    .category-grid { gap: 14px; }
+    .category-btn { padding: 16px 10px; font-size: 1.1rem; }
+
+    .modal-content { max-width: 480px; padding: 40px; }
+}
+
+@media (min-width: 1920px) {
+    .game-left { max-width: 600px; }
+
+    .letter-slot { width: 52px; height: 64px; font-size: 2.4rem; }
+
+    .alphabet-grid { max-width: 520px; gap: 8px; }
+    .letter-btn { font-size: 1.5rem; padding: 12px 0; }
+
+    .game-title { letter-spacing: 8px; }
+}
+
+/* ===== DPI / ZOOM SCALING ===== */
+/* 125% DPI (Windows default on many laptops) */
+@media (-webkit-min-device-pixel-ratio: 1.25) and (max-resolution: 143dpi),
+       (min-resolution: 120dpi) and (max-resolution: 143dpi) {
+    :root { --scale: 0.92; }
+
+    .letter-slot { width: 36px; height: 46px; }
+    .monster-body { width: 90px; height: 62px; }
+    .balloon-body { width: 32px; height: 40px; }
+    .stickman { width: 36px; height: 62px; }
+}
+
+/* 150% DPI */
+@media (-webkit-min-device-pixel-ratio: 1.5) and (max-resolution: 168dpi),
+       (min-resolution: 144dpi) and (max-resolution: 168dpi) {
+    :root { --scale: 0.85; }
+
+    .game-header { padding: 6px 12px; }
+    .game-footer { padding: 4px 16px; }
+    .game-area { padding: 6px 14px; gap: 6px; }
+
+    .letter-slot { width: 32px; height: 42px; font-size: 1.6rem; }
+    .word-display { gap: 5px; padding: 6px; }
+
+    .alphabet-grid { gap: 4px; }
+    .letter-btn { padding: 6px 0; font-size: 1.1rem; }
+
+    .monster-body { width: 82px; height: 56px; }
+    .balloon-body { width: 30px; height: 36px; }
+    .stickman { width: 34px; height: 58px; }
+    .stickman-head { width: 16px; height: 16px; }
+
+    .category-btn { padding: 10px 6px; font-size: 0.9rem; }
+    .game-title { font-size: clamp(2rem, 7vw, 3.5rem); }
+
+    .modal-content { padding: 24px; }
+    .result-emoji { font-size: 2.8rem; }
+}
+
+/* 175% DPI */
+@media (-webkit-min-device-pixel-ratio: 1.75) and (max-resolution: 191dpi),
+       (min-resolution: 168dpi) and (max-resolution: 191dpi) {
+    :root { --scale: 0.78; }
+
+    .game-header { padding: 4px 10px; }
+    .game-area { padding: 4px 10px; gap: 4px; }
+
+    .letter-slot { width: 28px; height: 36px; font-size: 1.3rem; }
+    .word-display { gap: 4px; padding: 4px; }
+
+    .alphabet-grid { gap: 3px; max-width: 340px; }
+    .letter-btn { padding: 5px 0; font-size: 1rem; }
+
+    .monster-body { width: 74px; height: 50px; }
+    .monster-eye { width: 12px; height: 12px; }
+    .monster-pupil { width: 5px; height: 5px; }
+    .balloon-body { width: 28px; height: 34px; }
+    .stickman { width: 30px; height: 52px; }
+    .stickman-head { width: 14px; height: 14px; }
+
+    .stat-card { padding: 6px 8px; }
+    .stat-icon { font-size: 1.1rem; }
+    .stat-value { font-size: 1.1rem; }
+
+    .btn-daily { padding: 10px 14px; }
+    .category-btn { padding: 8px 5px; font-size: 0.85rem; }
+    .category-btn .emoji { font-size: 1.2rem; }
+}
+
+/* 200% DPI (Retina / 4K) */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+    :root { --scale: 0.72; }
+
+    .game-header { padding: 4px 8px; }
+    .game-footer { padding: 3px 12px; }
+    .game-area { padding: 4px 8px; gap: 4px; }
+
+    .letter-slot { width: 26px; height: 34px; font-size: 1.2rem; border-bottom-width: 2px; }
+    .word-display { gap: 3px; padding: 4px; min-height: 40px; }
+
+    .alphabet-grid { gap: 3px; max-width: 320px; }
+    .letter-btn { padding: 4px 0; font-size: 0.95rem; border-width: 1.5px; }
+
+    .monster-body { width: 68px; height: 46px; }
+    .monster-eye { width: 10px; height: 10px; top: 12px; }
+    .monster-eye.left { left: 18px; }
+    .monster-eye.right { right: 18px; }
+    .monster-pupil { width: 5px; height: 5px; top: 2px; left: 2px; }
+    .monster-mouth { width: 22px; bottom: 14px; }
+    .balloon-body { width: 26px; height: 32px; }
+    .balloon-shine { width: 7px; height: 10px; top: 6px; left: 6px; }
+    .balloon-string { height: 18px; }
+    .stickman { width: 28px; height: 48px; }
+    .stickman-head { width: 13px; height: 13px; }
+    .stickman-body { height: 18px; top: 13px; }
+    .stickman-arm-left, .stickman-arm-right { width: 16px; top: 20px; }
+    .stickman-leg-left, .stickman-leg-right { height: 18px; top: 30px; }
+    .stickman-leg-left { left: 5px; }
+    .stickman-leg-right { right: 5px; }
+
+    .game-title { font-size: clamp(1.8rem, 6vw, 3rem); letter-spacing: 3px; }
+    .game-subtitle { font-size: 0.9rem; margin-bottom: 12px; }
+    .menu-content { padding: 12px; }
+    .stat-card { padding: 6px 8px; border-radius: 8px; }
+    .stat-icon { font-size: 1rem; }
+    .stat-value { font-size: 1rem; }
+    .stat-label { font-size: 0.6rem; }
+
+    .btn-daily { padding: 8px 12px; border-radius: 10px; }
+    .daily-icon { font-size: 1.5rem; }
+    .daily-text strong { font-size: 0.95rem; }
+    .daily-text small { font-size: 0.75rem; }
+
+    .category-btn { padding: 8px 4px; font-size: 0.8rem; border-radius: 8px; }
+    .category-btn .emoji { font-size: 1.1rem; }
+    .category-grid { gap: 6px; }
+
+    .btn { padding: 8px 20px; font-size: 1rem; }
+    .btn-play { font-size: 1.05rem; }
+    .btn-ghost { padding: 6px 14px; font-size: 0.85rem; }
+
+    .modal-content { padding: 20px; border-radius: 16px; }
+    .result-emoji { font-size: 2.5rem; }
+    .modal-content h2 { font-size: 1.8rem; }
+    .result-word { font-size: 1.1rem; }
+    .result-stat-item { padding: 6px; }
+    .rs-label { font-size: 0.6rem; }
+    .result-stat-item strong { font-size: 1rem; }
+
+    .wrong-pip { width: 8px; height: 8px; }
+    .footer-btn { font-size: 1.1rem; }
+    .footer-btn small { font-size: 0.55rem; }
 }
 
 /* ===== REDUCED MOTION ===== */
