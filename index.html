@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman - Word Guess Game</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Home / Menu Screen -->
+    <div id="menu-screen" class="screen active">
+        <div class="menu-forest-bg"></div>
+        <div class="menu-content">
+            <h1 class="game-title">HANGMAN</h1>
+            <p class="game-subtitle">Save the stickman!</p>
+            <div class="menu-stats">
+                <span class="stat">❤️ SAVED: <strong id="menu-saved">0</strong></span>
+                <span class="stat">⭐ BEST: <strong id="menu-best">0</strong></span>
+            </div>
+            <div class="category-select">
+                <h2>Choose a Category</h2>
+                <div id="category-buttons" class="category-grid"></div>
+            </div>
+            <button id="random-btn" class="btn btn-play">🎲 Random Category</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+        <header class="game-header">
+            <button id="home-btn" class="icon-btn" title="Home">🏠</button>
+            <span id="category-label" class="category-name">Outer Space</span>
+            <div class="header-stats">
+                <span class="stat">❤️ SAVED: <strong id="game-saved">0</strong></span>
+                <span class="stat">⭐ BEST: <strong id="game-best">0</strong></span>
+            </div>
+        </header>
+
+        <div class="game-area">
+            <div class="game-left">
+                <!-- Word Display -->
+                <div id="word-display" class="word-display"></div>
+
+                <!-- Hint -->
+                <div id="hint-area" class="hint-area"></div>
+
+                <!-- Alphabet Grid -->
+                <div id="alphabet-grid" class="alphabet-grid"></div>
+            </div>
+
+            <div class="game-right">
+                <!-- Scene: Forest + Characters -->
+                <div class="scene">
+                    <div class="forest-bg">
+                        <div class="tree tree-1"></div>
+                        <div class="tree tree-2"></div>
+                        <div class="tree tree-3"></div>
+                        <div class="tree tree-4"></div>
+                    </div>
+
+                    <!-- Balloon String + Character -->
+                    <div id="character-group" class="character-group">
+                        <div class="balloon" id="balloon">
+                            <div class="balloon-body"></div>
+                            <div class="balloon-string"></div>
+                        </div>
+                        <div class="stickman" id="stickman">
+                            <div class="stickman-head"></div>
+                            <div class="stickman-body"></div>
+                            <div class="stickman-arm-left"></div>
+                            <div class="stickman-arm-right"></div>
+                            <div class="stickman-leg-left"></div>
+                            <div class="stickman-leg-right"></div>
+                        </div>
+                    </div>
+
+                    <!-- Monster -->
+                    <div class="monster" id="monster">
+                        <div class="monster-body">
+                            <div class="monster-eye left"></div>
+                            <div class="monster-eye right"></div>
+                            <div class="monster-mouth"></div>
+                        </div>
+                        <div class="monster-fur"></div>
+                    </div>
+
+                    <!-- Wrong guess counter -->
+                    <div id="wrong-count" class="wrong-count"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="game-footer">
+            <button id="hint-btn" class="icon-btn" title="Hint">❓</button>
+            <button id="sound-btn" class="icon-btn" title="Toggle Sound">🔊</button>
+        </footer>
+    </div>
+
+    <!-- Result Modal -->
+    <div id="result-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="result-title"></h2>
+            <p id="result-word"></p>
+            <p id="result-message"></p>
+            <div class="modal-buttons">
+                <button id="play-again-btn" class="btn btn-play">Play Again</button>
+                <button id="menu-btn" class="btn btn-secondary">Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/words.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
